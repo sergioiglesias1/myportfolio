@@ -1,0 +1,154 @@
+<!-- Project Content -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Beta-Convergence Analysis</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+
+<body class="is-preload">
+	<div id="wrapper" class="fade-in">
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul class="links">
+				<li><a href="index.html">Opening</a></li>
+				<li class="active"><a href="project.html">Projects</a></li>
+			</ul>
+			<ul class="icons">
+				<li><a href="https://www.linkedin.com/in/sergio-iglesias-179aa323b/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+				<li><a href="https://github.com/sergioiglesias" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+			<article class="post">
+				<header class="major">
+					<h1>Beta-Convergence Analysis of Country Growth with Python</h1>
+					<p>7-minute read</p>
+				</header>
+				<div class="content">
+					<p>We'll be working with GDP per capita growth data from the <a href="https://databank.worldbank.org/reports.aspx?source=2&series=NY.GDP.PCAP.KD.ZG&country=#">World Development Indicators (WDI)</a> between 2004 and 2024. Each row in the dataset represents a different country and contains information on GDP growth rates over the specified periods. Here are some of the key variables in the dataset:</p>
+					<ul>
+						<li><strong>Country Code</strong> — The unique identifier for each country (e.g., USA, LUX, JPN, IRL, KOR).</li>
+						<li><strong>Group</strong> — Classification of countries into Emerging or Developed groups.</li>
+						<li><strong>Period</strong> — Time periods for which the growth rates are calculated.</li>
+						<li><strong>Growth_rate</strong> — The GDP growth rate for the respective period.</li>
+						<li><strong>Beta</strong> — The beta coefficient indicating convergence or divergence in economic growth within the group:
+							<ul>
+								<li>If β &lt; 0: Convergence — The gap gets smaller, balanced growth.</li>
+								<li>If β &gt; 0: Divergence — The gap gets larger, uneven growth.</li>
+							</ul>
+						</li>
+					</ul>
+
+					<h2>Data Preparation</h2>
+                    <p>We set up the environment by importing necessary libraries, loading the WDI dataset, cleaning column names, removing empty rows, and calculating average growth rates for each period. The resulting dataset contains country codes and growth rates for the four periods.</p>
+					<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+df_wdi = pd.read_csv("gdp_perc_growth_2004_2024.csv", sep=";", decimal=",")
+df_wdi.columns = [col.split(' [')[0] if ' [' in col else col for col in df_wdi.columns]
+df_wdi = df_wdi.dropna()
+df_wdi['Pre_Crisis_Growth (2004-2008)'] = df_wdi.loc[:, '2004':'2008'].mean(axis=1)
+df_wdi['Recuperation_Growth (2009-2013)'] = df_wdi.loc[:, '2009':'2013'].mean(axis=1)
+df_wdi['Stability_Growth (2014-2018)'] = df_wdi.loc[:, '2014':'2018'].mean(axis=1)
+df_wdi['Recent_Growth (2019-2024)'] = df_wdi.loc[:, '2019':'2024'].mean(axis=1)
+
+results = df_wdi[['Country Code', 'Pre_Crisis_Growth (2004-2008)', 'Recuperation_Growth (2009-2013)', 'Stability_Growth (2014-2018)', 'Recent_Growth (2019-2024)']]
+results.head(5).round(2)</code></pre>
+					<p>Sample first 5 rows of output to check:</p>
+					<pre><code>Country Code  Pre_Crisis_Growth (2004-2008)  Recuperation_Growth (2009-2013)  Stability_Growth (2014-2018)  Recent_Growth (2019-2024)
+USA                   1.49                              0.40                            1.79                            0.98
+LUX                   2.48                             -0.85                            0.28                           -0.41
+CHE                   2.40                              0.02                            1.02                            0.27
+CHL                   4.46                              3.07                            0.87                           -0.68
+POL                   5.18                              2.69                            4.59                            2.78
+</code></pre>
+
+					<h2>Data Visualization and Linear Regression</h2>
+					<pre><code># First regression plot
+x_col = 'Pre_Crisis_Growth (2004-2008)'
+y_col = 'Recent_Growth (2019-2024)'
+
+for group in ['Emerging', 'Developed']:
+    subset = df_wdi[df_wdi['Group'] == group]
+    X = subset[[x_col]]
+    y = subset[y_col]
+    model = LinearRegression().fit(X, y)
+    plt.plot(X, model.predict(X), linestyle='-', label=f'{group} (β = {model.coef_[0]:.2f})')
+
+plt.title('β-Convergence: Pre-Crisis (2004-2008) vs. Recent (2019-2024)')
+plt.xlabel('Pre-Crisis Growth (%)')
+plt.ylabel('Recent Growth (%)')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()</code></pre>
+					<img src="images/output_1.png" alt="Plot 1" class="image main" />
+                        <p>To start, we generate a plot with linear regression lines to explore beta-convergence by comparing growth rates between the Pre-Crisis (2004–2008) and Recent (2019–2024) periods for Emerging and Developed economies. This first visualization helps to start revealing signs of divergence or convergence.</p>
+					<!-- Second plot -->
+					<pre><code># Second regression plot
+x_col = 'Recuperation_Growth (2009-2013)'
+y_col = 'Stability_Growth (2014-2018)'
+
+for group in ['Emerging', 'Developed']:
+    subset = df_wdi[df_wdi['Group'] == group]
+    X = subset[[x_col]]
+    y = subset[y_col]
+    model = LinearRegression().fit(X, y)
+    plt.plot(X, model.predict(X), linestyle='-', label=f'{group} (β = {model.coef_[0]:.2f})')
+
+plt.title('β-Convergence: Recuperation (2009-2013) vs. Stability (2014-2018)')
+plt.xlabel('Recuperation Growth (%)')
+plt.ylabel('Stability Growth (%)')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()</code></pre>
+					<img src="images/output_2.png" alt="Plot 2" class="image main" />
+                        <p>Next, we examine beta-convergence by plotting a linear regression of growth rates between the Recuperation (2009–2013) and Stability (2014–2018) periods.</p>
+					<!-- Third plot -->
+					<pre><code># Third regression plot
+x_col = 'Stability_Growth (2014-2018)'
+y_col = 'Recent_Growth (2019-2024)'
+
+for group in ['Emerging', 'Developed']:
+    subset = df_wdi[df_wdi['Group'] == group]
+    X = subset[[x_col]]
+    y = subset[y_col]
+    model = LinearRegression().fit(X, y)
+    plt.plot(X, model.predict(X), linestyle='-', label=f'{group} (β = {model.coef_[0]:.2f})')
+
+plt.title('β-Convergence: Stability (2014-2018) vs. Recent (2019-2024)')
+plt.xlabel('Stability Growth (%)')
+plt.ylabel('Recent Growth (%)')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()</code></pre>
+					<img src="images/output_3.png" alt="Plot 3" class="image main" />
+<p>Finally, we create another plot with regression lines to evaluate beta-convergence from the Stability (2014–2018) to the Recent (2019–2024) period. This comparison is the most interesting one, due to the two β coefficients being positive, and also these are the most recent periods in this project.</p>
+					<h2>Conclusions</h2>
+					<ul>
+						<li><strong>Emerging economies:</strong> Fast growth but diverging (β = 0.47–0.69).</li>
+						<li><strong>Developed economies:</strong> Convergence slowing down, β turns positive recently.</li>
+					</ul>
+					<a href="https://github.com/sergioiglesias1" class="button">View Full Code on GitHub</a>
+				</div>
+			</article>
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+</body>
+</html>
