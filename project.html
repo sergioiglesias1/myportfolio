@@ -67,18 +67,51 @@ df_wdi['Stability_Growth (2014-2018)'] = df_wdi.loc[:, '2014':'2018'].mean(axis=
 df_wdi['Recent_Growth (2019-2024)'] = df_wdi.loc[:, '2019':'2024'].mean(axis=1)
 
 results = df_wdi[['Country Code', 'Pre_Crisis_Growth (2004-2008)', 'Recuperation_Growth (2009-2013)', 'Stability_Growth (2014-2018)', 'Recent_Growth (2019-2024)']]
-results.head(5).round(2)</code></pre>
-					<p>Sample first 5 rows of output to check:</p>
+# See results rounded to 2 decimals
+results.round(2)</code></pre>
+					<p>Sample output to check:</p>
 					<pre><code>Country Code  Pre_Crisis_Growth (2004-2008)  Recuperation_Growth (2009-2013)  Stability_Growth (2014-2018)  Recent_Growth (2019-2024)
 USA                   1.49                              0.40                            1.79                            0.98
 LUX                   2.48                             -0.85                            0.28                           -0.41
 CHE                   2.40                              0.02                            1.02                            0.27
 CHL                   4.46                              3.07                            0.87                           -0.68
 POL                   5.18                              2.69                            4.59                            2.78
+ETH		      6.61				7.30				6.38				3.77
+VNM		      5.52				3.63				5.61				2.61
+IRL		      0.01			       -0.78				5.07				1.63
+GBR		      1.27			       -0.33				1.61				1.88
+KOR		      4.22				2.80				2.08				1.33
+NGA		      3.53				3.54				-0.41				0.13
+BGD		      5.07				3.86				5.80				4.18
+PAK		      2.07				0.81				3.59				0.89
+EGY		      2.96				0.58				2.10				2.51
+PHL		      3.66				2.38				3.25				4.14
+MAR		      3.52				2.09				1.91				0.07
+IDN		      2.90				4.39				3.91				1.60
+IND		      5.26				5.20				5.02				4.24
+PER		      4.90				3.39				1.45				0.69
+MOZ		      5.28				3.95				2.14			       -0.46
+DEU		      1.33				1.02				1.43				0.12
+ESP		      1.25			       -2.00				2.68				2.61
+JPN		      0.83				0.46				1.09				0.48
+CAN		      1.39				0.17				0.62			       -0.12
+AUS		      1.41				0.88				0.99				0.76
+NOR		      1.62		               -0.53				0.77				0.72
+NLD		      1.78		               -0.74				1.73				0.46
+DNK		      1.52			       -0.57				1.64				1.97
+SWE		      2.20				0.21				1.37				0.91		
+FIN		      2.99	                       -1.46				1.13	                       -0.16
 </code></pre>
 
 					<h2>Data Visualization and Linear Regression</h2>
-					<pre><code># First regression plot
+					<pre><code>
+# Group countries by emerging or developed
+emerging = ['CHL', 'POL', 'ETH', 'VNM', 'IND', 'EGY', 'IDN', 'PER', 'MAR', 'PHL', 'NGA', 'BGD', 'PAK', 'MOZ']
+developed = ['USA', 'CHE', 'LUX', 'GBR', 'KOR', 'IRL', 'DEU', 'ESP', 'JPN', 'CAN', 'AUS', 'NOR', 'NLD', 'DNK', 'SWE', 'FIN']
+df_wdi['Group'] = df_wdi['Country Code'].apply(
+    lambda x: 'Emerging' if x in emerging else 'Developed'
+    )
+# First regression plot
 x_col = 'Pre_Crisis_Growth (2004-2008)'
 y_col = 'Recent_Growth (2019-2024)'
 
@@ -158,6 +191,7 @@ plt.show()</code></pre>
 	<script src="assets/js/main.js"></script>
 </body>
 </html>
+
 
 
 
