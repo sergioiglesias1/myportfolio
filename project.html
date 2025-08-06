@@ -67,9 +67,8 @@ df_wdi['Stability_Growth (2014-2018)'] = df_wdi.loc[:, '2014':'2018'].mean(axis=
 df_wdi['Recent_Growth (2019-2024)'] = df_wdi.loc[:, '2019':'2024'].mean(axis=1)
 
 results = df_wdi[['Country Code', 'Pre_Crisis_Growth (2004-2008)', 'Recuperation_Growth (2009-2013)', 'Stability_Growth (2014-2018)', 'Recent_Growth (2019-2024)']]
-# See results rounded to 2 decimals
 results.round(2)</code></pre>
-					<p>Sample output to check:</p>
+					<p>Sample output rounded to two decimals to check:</p>
 					<pre><code>Country Code  Pre_Crisis_Growth (2004-2008)  Recuperation_Growth (2009-2013)  Stability_Growth (2014-2018)  Recent_Growth (2019-2024)
 USA                   1.49                              0.40                            1.79                            0.98
 LUX                   2.48                             -0.85                            0.28                           -0.41
@@ -111,6 +110,7 @@ developed = ['USA', 'CHE', 'LUX', 'GBR', 'KOR', 'IRL', 'DEU', 'ESP', 'JPN', 'CAN
 df_wdi['Group'] = df_wdi['Country Code'].apply(
     lambda x: 'Emerging' if x in emerging else 'Developed'
     )
+						
 # First regression plot
 x_col = 'Pre_Crisis_Growth (2004-2008)'
 y_col = 'Recent_Growth (2019-2024)'
@@ -191,6 +191,7 @@ plt.show()</code></pre>
 	<script src="assets/js/main.js"></script>
 </body>
 </html>
+
 
 
 
