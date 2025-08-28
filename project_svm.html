@@ -83,7 +83,7 @@ print(f"■ Training Variable: {X_train.shape[0]} samples")
 print(f"■ Testing Variable: {X_test.shape[0]} samples")
 print("=" * 40)</code></pre>
 
-<h2>Pipeline para SVM</h2>
+<h2>Pipeline for SVM</h2>
 <pre><code>svm_pipeline = Pipeline([
     ('scaler', StandardScaler()),
     ('svm', SVC(kernel='rbf', random_state=42, probability=True))
@@ -192,4 +192,5 @@ print("=" * 40)</code></pre>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
 </body>
+
 </html>
