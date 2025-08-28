@@ -1,84 +1,134 @@
-# Sergio Iglesias - Professional Portfolio
+```markdown
+# Sergio Iglesias - Portfolio: Beta-Convergence Analysis
 
-## Overview
+## Project Overview
 
-Welcome to my professional portfolio! Here, you will find a showcase of my skills, projects, and accomplishments as a dedicated professional aiming to make an impact in the [your field or industry, e.g., "data science", "software development", etc.]. This portfolio highlights my commitment to leveraging technology and innovation to solve complex problems and create meaningful solutions.
+This project investigates Beta-Convergence across Emerging and Developed economies over four distinct periods:
 
----
+- 2004–2008
+- 2009–2013  
+- 2014–2018
+- 2019–2024
+
+Using Python (Pandas, Matplotlib, and Scikit-learn), I prepared the data, visualized growth trends, and ran regression models to determine convergence patterns. The goal is to understand whether c[...]
 
 ## Table of Contents
 
-- [About Me](#about-me)
-- [Skills](#skills)
-- [Featured Projects](#featured-projects)
-- [How to Explore This Portfolio](#how-to-explore-this-portfolio)
+- [Requirements](#requirements)
+- [Data Acquisition](#data-acquisition)
+- [Beta-Convergence Implementation](#beta-convergence-implementation)
+- [Visualizations](#visualizations)
+- [Interpretation and Limitations](#interpretation-and-limitations)
+- [How to Run](#how-to-run)
 - [Contact](#contact)
 - [Credits](#credits)
 
----
+## Requirements
 
-## About Me
+- Python 3.7+
+- Libraries:
+  - pandas
+  - numpy
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - requests (for API data access)
 
-I am based in Santander, Cantabria, and I am passionate about [your main professional interests, e.g., "data-driven decision-making", "building scalable software solutions", etc.]. I have experience in [list key professional areas, e.g., "data analysis, machine learning, and visualization"] and am constantly seeking opportunities to grow and collaborate on innovative projects.
+Install dependencies with:
 
----
+```
+pip install pandas numpy matplotlib seaborn scikit-learn requests
+```
 
-## Skills
+## Data Acquisition
 
-- **Programming Languages**: Python, SQL, [add others if applicable].
-- **Libraries & Frameworks**: Pandas, Matplotlib, Scikit-learn, [add others relevant to your expertise].
-- **Areas of Expertise**: [e.g., "Data Analysis", "Machine Learning", "Web Development"].
-- **Tools**: Git, APIs, Jupyter Notebooks, [others you use regularly].
-- **Soft Skills**: Problem-solving, critical thinking, teamwork, and adaptability.
+The analysis uses GDP per capita data from the World Development Indicators (WDI) database. Data is retrieved through the World Bank API or directly from their databank.
 
----
+Key variables:
+- GDP per capita (constant 2015 US$)
+- Country classification (Emerging vs. Developed economies)
+- Time period: 2004-2024
 
-## Featured Projects
+## Beta-Convergence Implementation
 
-### [Project 1: Beta-Convergence Analysis](https://github.com/sergioiglesias1/myportfolio)
-- **Description**: Explored economic convergence trends across countries over two decades.
-- **Skills Highlighted**: Data analysis, visualization, regression modeling.
-- **Tools Used**: Python (Pandas, Matplotlib, Scikit-learn).
+Using scikit-learn's LinearRegression, I estimate convergence coefficients for each period:
 
-### [Project 2: Project Name]
-- **Description**: [Brief summary of the project and its goals].
-- **Skills Highlighted**: [Key skills used or developed].
-- **Tools Used**: [Technologies and frameworks applied].
+```
+# Example code structure
+from sklearn.linear_model import LinearRegression
 
-### [Project 3: Project Name]
-- **Description**: [Brief summary of the project and its goals].
-- **Skills Highlighted**: [Key skills used or developed].
-- **Tools Used**: [Technologies and frameworks applied].
+# Prepare data for a specific period
+X = initial_gdp_values.reshape(-1, 1)
+y = growth_rates
 
-For a full list of projects, visit my [GitHub profile](https://github.com/sergioiglesias1).
+# Run regression
+model = LinearRegression().fit(X, y)
 
----
+# Extract beta coefficient
+beta_coefficient = model.coef_[0]
+```
 
-## How to Explore This Portfolio
+The analysis includes both absolute convergence (all countries) and conditional convergence (within country groups).
 
-1. **Clone or Download** this repository.
-2. Navigate through the directories to explore project folders and documentation.
-3. Open the `index.html` file to view the web portfolio (if applicable).
+## Visualizations
 
----
+The project generates several visual components:
+
+- Growth vs. Initial GDP scatter plots for each period
+- Regression lines showing convergence/divergence trends
+- Comparison charts between Emerging and Developed economies
+- Time series of GDP per capita for selected countries
+- Coefficient plots showing how beta values change across periods
+
+## Interpretation and Limitations
+
+Key findings:
+- Identification of periods with strong convergence versus divergence
+- Differences in convergence patterns between Emerging and Developed economies
+- Impact of global economic events on convergence trends
+
+Limitations:
+- Data availability and quality for some economies
+- Simplified model that doesn't capture all convergence determinants
+- Potential omitted variable bias in the regression analysis
+
+## How to Run
+
+1. Clone this repository
+2. Install required packages
+3. Run the Jupyter Notebook `beta_convergence_analysis.ipynb`
+4. Explore the visualizations and results
+5. For the web portfolio, open `index.html` in your browser
 
 ## Contact
 
 - **Email**: sergioiglesiaslopez03@gmail.com
 - **Location**: Santander, Cantabria, 39012
-- **LinkedIn**: [Sergio Iglesias](https://www.linkedin.com/in/sergio-iglesias-179aa323b/)
-- **GitHub**: [sergioiglesias1](https://github.com/sergioiglesias1)
-
----
+- **LinkedIn**: https://www.linkedin.com/in/sergio-iglesias-179aa323b/
+- **GitHub**: https://github.com/sergioiglesias1
 
 ## Credits
 
-- **Icons**: Font Awesome (fontawesome.io).
-- **Tools**: jQuery, Scrollex, Responsive Tools.
-- **Data Sources**: World Development Indicators (WDI).
+### Demo Images
+Unsplash (unsplash.com) – CC0 (public domain) images (not included).
 
----
+### Icons
+Font Awesome (fontawesome.io).
 
-### License
+### Other Tools
+- jQuery (jquery.com)
+- Scrollex (github.com/ajlkn/jquery.scrollex)
+- Responsive Tools (github.com/ajlkn/responsive-tools)
 
-This portfolio is licensed under [Creative Commons Attribution 3.0 License](https://html5up.net/license).
+### Data Source
+World Development Indicators (WDI). More info: https://databank.worldbank.org
+
+### Analysis
+Developed by Sergio Iglesias using Python libraries.
+
+### Original Code Adaptation
+The original Massively code has been adapted to include my portfolio and project content.
+
+### License Details
+For the full license details, visit html5up.net/license.
+```
