@@ -109,8 +109,8 @@ As the test size is 0.2 (20%) and the number of samples is 150:
       Defines the reach of each training example's influence in the RBF kernel.
       Tested values: [0.001, 0.01, 0.1, 1] with the purpose of scaling the kernel's influence proportionally</li>
 	<li>These two formulas will be used: RBF Kernel (Radial Basis Function) and SVM Loss Function with L2 Regularization</li>
-	<img src="images/RBFKernel.png" alt="Accuracy Results">
-	<img src="images/RBFKernelLoss.png" alt="Accuracy Results">
+	<img src="images/RBFKernel.png" style="max-width:100%; height:auto;">
+	<img src="images/RBFKernelLoss.png" style="max-width:100%; height:auto;">
     <p>where (phi({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
 <h2>Best SVM model</h2>
 <pre><code>svm_grid = GridSearchCV(svm_pipeline, svm_param_grid, cv=5)
@@ -171,7 +171,7 @@ f1 = f1_score(y_test, y_pred_svm, average=None)
 report = classification_report(y_test, y_pred_svm, target_names=target_names, digits=5)
 print(f"{report}")
 </code></pre>
-<img src="images/Captura de pantalla 2025-08-29 114925.png" alt="Accuracy Results">
+<img src="images/Captura de pantalla 2025-08-29 114925.png" style="max-width:100%; height:auto;">
     <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
 	<h2>Final Output</h2>
 	<pre><code>results_df = pd.DataFrame({
@@ -195,10 +195,10 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
     <ul>
       <li><strong>C:</strong> 1</li>
       <li><strong>Gamma:</strong> 0.1</li>
-	<img src="images/cap1.png" alt="All Graphs">
-	<img src="images/cap2.png" alt="All Graphs">
-	<img src="images/cap3.png" alt="All Graphs">
-	<img src="images/cap4.png" alt="All Graphs">
+	<img src="images/cap1.png" style="max-width:100%; height:auto;">
+	<img src="images/cap2.png" style="max-width:100%; height:auto;">
+	<img src="images/cap3.png" style="max-width:100%; height:auto;">
+	<img src="images/cap4.png" style="max-width:100%; height:auto;">
 	</ul>
   </li>
 </ul>
@@ -225,6 +225,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
