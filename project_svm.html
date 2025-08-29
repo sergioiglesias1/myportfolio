@@ -110,7 +110,7 @@ As the test size is 0.2 (20%) and the number of samples is 150:
 	<li>These two formulas will be used: RBF Kernel (Radial Basis Function) and SVM Loss Function with L2 Regularization</li>
 	<img src="images/RBFKernel.png" style="max-width:100%; height:auto;">
 	<img src="images/RBFKernelLoss.png" style="max-width:100%; height:auto;">
-    <p>where (phi({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
+    <p>where (Φ({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
 <h2>Best SVM model</h2>
 <pre><code>svm_grid = GridSearchCV(svm_pipeline, svm_param_grid, cv=5)
 svm_grid.fit(X_train, y_train)
