@@ -64,31 +64,32 @@ from sklearn.metrics import (accuracy_score, classification_report, confusion_ma
                            ConfusionMatrixDisplay, precision_score, recall_score, f1_score)
 from sklearn.pipeline import Pipeline</code></pre>
 
-<h2>Load dataset</h2>
+<h2>Load dataset and Create dataframe</h2>
 <pre><code>data = load_iris()
 X, y = data.data, data.target
 feature_names = data.feature_names
 target_names = data.target_names
 
-# Create dataframe
 df = pd.DataFrame(X, columns=feature_names)
 df['target'] = y
 df['species'] = df['target'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
 
-print("=" * 40)
-print(f"■ Dataset Dimensions: {X.shape}")
-print(f"■ Available Characteristics: {feature_names}")
-print("=" * 40)</code></pre>
-
+print(f"Dataset Dimensions: {X.shape}")
+print(f"Available Characteristics: {feature_names}")
+</code></pre>
+Dataset Dimensions: (150, 4)
+Available Characteristics: ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
 <h2>Train-Test</h2>
 <pre><code>X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-print(f"■ Training Variable: {X_train.shape[0]} samples")
-print(f"■ Testing Variable: {X_test.shape[0]} samples")
-print("=" * 40)</code></pre>
-
+print(f"Training Variable: {X_train.shape[0]} samples")
+print(f"Testing Variable: {X_test.shape[0]} samples")
+</code></pre>
+As the test size is 0.2 (20%) and the number of samples is 150:
+Training Variable: 120 samples
+Testing Variable: 30 samples
 <h2>Pipeline for SVM</h2>
 <pre><code>svm_pipeline = Pipeline([
     ('scaler', StandardScaler()),
@@ -100,14 +101,25 @@ print("=" * 40)</code></pre>
     'svm__C': [0.1, 1, 10, 100],
     'svm__gamma': [0.001, 0.01, 0.1, 1, 'scale']
 }</code></pre>
-
+Hyperparameters:
+C (Regularization Strength):
+  Controls the trade-off between maximizing the margin and minimizing classification errors.  
+  Tested values: [0.1, 1, 10, 100]
+γ (Gamma - Kernel Coefficient):
+  Defines the reach of each training example's influence in the RBF kernel.  
+  Tested values: [0.001, 0.01, 0.1, 1] with the purpose of scaling the kernel's influence proportionally
+RBF Kernel (Radial Basis Function):
+   $$K(\mathbf{x}_i, \mathbf{x}_j) = \exp\left(-\gamma \cdot \|\mathbf{x}_i - \mathbf{x}_j\|^2\right)$$
+SVM Loss Function (with L2 Regularization):
+   $$\min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i (\mathbf{w} \cdot \phi(\mathbf{x}_i) + b))$$
+   where $\phi(\mathbf{x}_i)$ is the nonlinear transformation applied via the RBF kernel.
 <h2>Best SVM model</h2>
 <pre><code>svm_grid = GridSearchCV(svm_pipeline, svm_param_grid, cv=5)
 svm_grid.fit(X_train, y_train)
 best_svm = svm_grid.best_estimator_
 y_pred_svm = best_svm.predict(X_test)
 y_pred_proba_svm = best_svm.predict_proba(X_test)</code></pre>
-
+This code tunes an SVM model via grid search with 5-fold CV, fits it to training data, gets the best estimator, and predicts labels and probabilities on test data.
 <h2>Create subplots and set the figure size</h2>
 <pre><code>fig, axes = plt.subplots(2, 2, figsize=(15, 12))
 
@@ -146,22 +158,32 @@ plt.show()</code></pre>
 
 <h2>Accuracy results</h2>
 <pre><code>print("=" * 40)
-print("ACCURACY RESULTS")
-print(f"■ Cross-validation accuracy: {svm_grid.best_score_:.3f}")
-print(f"■ Test set accuracy: {accuracy_score(y_test, y_pred_svm):.3f}")
-print("=" * 40)</code></pre>
-
+print(f"Cross-validation accuracy: {svm_grid.best_score_:.3f}")
+print(f"Test set accuracy: {accuracy_score(y_test, y_pred_svm):.3f}")
+</code></pre>
+Regarding accuracy results we have:
+<strong>Cross-validation accuracy:</strong> 0.975
+<strong>Test set accuracy:</strong> 0.967
 <h2>Metrics by class</h2>
 <pre><code>precision = precision_score(y_test, y_pred_svm, average=None)
 recall = recall_score(y_test, y_pred_svm, average=None)
 f1 = f1_score(y_test, y_pred_svm, average=None)
 
-print("📊 CLASSIFICATION REPORT:")
 report = classification_report(y_test, y_pred_svm, target_names=target_names, digits=5)
 print(f"{report}")
-print("=" * 40)</code></pre>
+</code></pre>
+The classification report:
+              precision    recall  f1-score   support
 
-<h2>Create dataframe with predictions</h2>
+      setosa    1.00000   1.00000   1.00000        10
+  versicolor    1.00000   0.90000   0.94737        10
+   virginica    0.90909   1.00000   0.95238        10
+
+    accuracy                        0.96667        30
+   macro avg    0.96970   0.96667   0.96658        30
+weighted avg    0.96970   0.96667   0.96658        30
+
+The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.<h2>Create dataframe with predictions</h2>
 <pre><code>results_df = pd.DataFrame({
     'Real': y_test,
     'Predicción': y_pred_svm,
@@ -171,12 +193,15 @@ print("=" * 40)</code></pre>
 results_df['Real_Especie'] = results_df['Real'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
 results_df['Pred_Especie'] = results_df['Predicción'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
 
-print(f"■ NUMBER OF CORRECT PREDICTIONS: {results_df['Correcto'].sum()}/{len(results_df)}")
-print(f"■ FINAL ACCURACY: {accuracy_score(y_test, y_pred_svm):.3f}")
-print(f"■ BEST HYPERPARAMETERS: {svm_grid.best_params_}")
-print("=" * 40)</code></pre>
-
-				<h2>Conclusions</h2>
+print(f"NUMBER OF CORRECT PREDICTIONS: {results_df['Correcto'].sum()}/{len(results_df)}")
+print(f"FINAL ACCURACY: {accuracy_score(y_test, y_pred_svm):.3f}")
+print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
+</code></pre>
+Output:
+NUMBER OF CORRECT PREDICTIONS: 29/30
+FINAL ACCURACY: 0.967
+BEST HYPERPARAMETERS: {'svm__C': 1, 'svm__gamma': 0.1}
+			<h2>Conclusions</h2>
                 <ul>
                     <li>The Iris dataset contains 3 balanced species (50 samples each)</li>
                     <li>Petal features are more discriminative than sepal features</li>
@@ -200,4 +225,5 @@ print("=" * 40)</code></pre>
 </body>
 
 </html>
+
 
