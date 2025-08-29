@@ -1,104 +1,31 @@
 ```markdown
-# Sergio Iglesias - Portfolio: Beta-Convergence Analysis
+# Welcome to my Portfolio
 
-## Project Overview
+This repository serves as an overview of my personal portfolio.  
+Here you will find a collection of projects that highlight my skills in software development, data analysis, and applied machine learning.  
+I work with libraries such as **scikit-learn**, **pandas**, and **NumPy** to build models, process data, and extract insights.  
+The goal of these projects is to demonstrate not only technical knowledge, but also the ability to deliver clear, reproducible, and practical solutions.  
 
-This project investigates Beta-Convergence across Emerging and Developed economies over four distinct periods:
+## Projects
+- **Beta-Convergence Analysis** – A data science project examining global economic trends through linear regression modeling. Comparing developed vs. developing countries across multiple time periods to identify and quantify convergence/divergence patterns in key economic indicators.
+- **Machine Learning Project with SVM Optimization** – Developed an SVM classifier achieving 96.7% test accuracy through hyperparameter optimization. Conducted comprehensive analysis including confusion matrix and correlation matrix to validate model performance and feature relationships. Implemented a machine learning pipeline with detailed evaluation metrics.  
+## Tech Used
+- **Languages & Libraries**: Python, scikit-learn, pandas, NumPy, matplotplib, seaborn
+- **Machine Learning**: Regression, Pipeline, Confusion Matrix, Hyperparameter Searching
 
-- 2004–2008
-- 2009–2013  
-- 2014–2018
-- 2019–2024
-
-Using Python (Pandas, Matplotlib, and Scikit-learn), I prepared the data, visualized growth trends, and ran regression models to determine convergence patterns. The goal is to understand whether c[...]
-
-## Table of Contents
-
-- [Requirements](#requirements)
-- [Data Acquisition](#data-acquisition)
-- [Beta-Convergence Implementation](#beta-convergence-implementation)
-- [Visualizations](#visualizations)
-- [Interpretation and Limitations](#interpretation-and-limitations)
+---
+Check each project folder for details, setup instructions, and documentation.
 - [How to Run](#how-to-run)
 - [Contact](#contact)
 - [Credits](#credits)
 
-## Requirements
-
-- Python 3.7+
-- Libraries:
-  - pandas
-  - numpy
-  - matplotlib
-  - seaborn
-  - scikit-learn
-  - requests (for API data access)
-
-Install dependencies with:
-
-```
-pip install pandas numpy matplotlib seaborn scikit-learn requests
-```
-
-## Data Acquisition
-
-The analysis uses GDP per capita data from the World Development Indicators (WDI) database. Data is retrieved through the World Bank API or directly from their databank.
-
-Key variables:
-- GDP per capita (constant 2015 US$)
-- Country classification (Emerging vs. Developed economies)
-- Time period: 2004-2024
-
-## Beta-Convergence Implementation
-
-Using scikit-learn's LinearRegression, I estimate convergence coefficients for each period:
-
-```
-# Example code structure
-from sklearn.linear_model import LinearRegression
-
-# Prepare data for a specific period
-X = initial_gdp_values.reshape(-1, 1)
-y = growth_rates
-
-# Run regression
-model = LinearRegression().fit(X, y)
-
-# Extract beta coefficient
-beta_coefficient = model.coef_[0]
-```
-
-The analysis includes both absolute convergence (all countries) and conditional convergence (within country groups).
-
-## Visualizations
-
-The project generates several visual components:
-
-- Growth vs. Initial GDP scatter plots for each period
-- Regression lines showing convergence/divergence trends
-- Comparison charts between Emerging and Developed economies
-- Time series of GDP per capita for selected countries
-- Coefficient plots showing how beta values change across periods
-
-## Interpretation and Limitations
-
-Key findings:
-- Identification of periods with strong convergence versus divergence
-- Differences in convergence patterns between Emerging and Developed economies
-- Impact of global economic events on convergence trends
-
-Limitations:
-- Data availability and quality for some economies
-- Simplified model that doesn't capture all convergence determinants
-- Potential omitted variable bias in the regression analysis
-
 ## How to Run
 
-1. Clone this repository
-2. Install required packages
-3. Run the Jupyter Notebook `beta_convergence_analysis.ipynb`
-4. Explore the visualizations and results
-5. For the web portfolio, open `index.html` in your browser
+This portfolio is hosted on GitHub Pages and can be accessed directly:
+
+Live Site URL: https://sergioiglesias1.github.io/myportfolio/
+
+No local installation is required to view the portfolio.
 
 ## Contact
 
