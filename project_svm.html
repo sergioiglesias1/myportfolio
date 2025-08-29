@@ -109,12 +109,12 @@ As the test size is 0.2 (20%) and the number of samples is 150:
       Defines the reach of each training example's influence in the RBF kernel.
       Tested values: [0.001, 0.01, 0.1, 1] with the purpose of scaling the kernel's influence proportionally</li>
 
-    <li>RBF Kernel (Radial Basis Function):
-    $$ K(\mathbf{x}_i, \mathbf{x}_j) = \exp\left(-\gamma \cdot \|\mathbf{x}_i - \mathbf{x}_j\|^2\right) $$</li>
+    <li>RBF Kernel (Radial Basis Function):	
+	<img src="images/RBFKernel.png" alt="Accuracy Results">
 
-    <li></li>SVM Loss Function (with L2 Regularization):
-    $$ \min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i (\mathbf{w} \cdot \phi(\mathbf{x}_i) + b)) $$</li>
-    <p>where \( \phi(\mathbf{x}_i) \) is the nonlinear transformation applied via the RBF kernel.</p>
+    <li>SVM Loss Function (with L2 Regularization):
+	<img src="images/RBFKernelLoss.png" alt="Accuracy Results">
+    <p>where (phi({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
 <h2>Best SVM model</h2>
 <pre><code>svm_grid = GridSearchCV(svm_pipeline, svm_param_grid, cv=5)
 svm_grid.fit(X_train, y_train)
@@ -164,6 +164,7 @@ print(f"Cross-validation accuracy: {svm_grid.best_score_:.3f}")
 print(f"Test set accuracy: {accuracy_score(y_test, y_pred_svm):.3f}")
 </code></pre>
 Regarding accuracy results we have:
+<img src="images/Captura de pantalla 2025-08-29 114925.png" alt="Accuracy Results">
 <li><strong>Cross-validation accuracy = </strong>0.975</li>
 <li><strong>Test set accuracy = </strong>0.967</li>
 <h2>Metrics by class</h2>
@@ -175,14 +176,7 @@ report = classification_report(y_test, y_pred_svm, target_names=target_names, di
 print(f"{report}")
 </code></pre>
 <h3>The classification report:</h3>
-| Class      | Precision | Recall | F1-Score | Support |
-|------------|-----------|--------|----------|---------|
-| setosa     | 1.00000   | 1.00000| 1.00000  | 10      |
-| versicolor | 1.00000   | 0.90000| 0.94737  | 10      |
-| virginica  | 0.90909   | 1.00000| 0.95238  | 10      |
-| accuracy   |           | 		  | 0.96667  | 30      |
-| macro avg  | 0.96970   | 0.96667| 0.96658  | 30      |
-| weighted avg| 0.96970  | 0.96667| 0.96658  | 30      |
+
     <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
 	<pre><code>results_df = pd.DataFrame({
     'Real': y_test,
@@ -205,6 +199,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
     <ul>
       <li><strong>C:</strong> 1</li>
       <li><strong>Gamma:</strong> 0.1</li>
+	<img src="output_ml_svm.png" alt="All Graphs">
     </ul>
   </li>
 </ul>
@@ -232,6 +227,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
