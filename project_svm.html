@@ -109,8 +109,8 @@ As the test size is 0.2 (20%) and the number of samples is 150:
       Defines the reach of each training example's influence in the RBF kernel.
       Tested values: [0.001, 0.01, 0.1, 1] with the purpose of scaling the kernel's influence proportionally</li>
 
-    <li>RBF Kernel (Radial Basis Function):	
 	<img src="images/RBFKernel.png" alt="Accuracy Results">
+	<li>RBF Kernel (Radial Basis Function):	
     <li>SVM Loss Function (with L2 Regularization):
 	<img src="images/RBFKernelLoss.png" alt="Accuracy Results">
     <p>where (phi({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
@@ -173,9 +173,10 @@ f1 = f1_score(y_test, y_pred_svm, average=None)
 report = classification_report(y_test, y_pred_svm, target_names=target_names, digits=5)
 print(f"{report}")
 </code></pre>
-<h3>The classification report:</h3>
+The classification report:
 <img src="images/Captura de pantalla 2025-08-29 114925.png" alt="Accuracy Results">
     <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
+	<h2>Final Output</h2>
 	<pre><code>results_df = pd.DataFrame({
     'Real': y_test,
     'Prediction': y_pred_svm,
@@ -191,19 +192,21 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </code></pre>
 <strong>Output:</strong>
 <ul class="results-list">
-  <li><strong>Número de predicciones correctas:</strong> 29/30</li>
-  <li><strong>Precisión final:</strong> 96.7% (0.967)</li>
-  <li><strong>Mejores hiperparámetros:</strong> 
+  <li><strong>Number of correct predictions:</strong> 29/30</li>
+  <li><strong>Final accuracy:</strong> 96.7% (0.967)</li>
+  <li><strong>Best hyperparameters:</strong> 
     <ul>
       <li><strong>C:</strong> 1</li>
       <li><strong>Gamma:</strong> 0.1</li>
-	<img src="images/output_ml_svm.png" alt="All Graphs">
-    </ul>
+	<img src="images/cap1.png" alt="All Graphs">
+	<img src="images/cap2.png" alt="All Graphs">
+	<img src="images/cap3.png" alt="All Graphs">
+	<img src="images/cap4.png" alt="All Graphs">
+	</ul>
   </li>
 </ul>
 			<h2>Conclusions</h2>
                 <ul>
-                    <li>The Iris dataset contains 3 balanced species (50 samples each)</li>
                     <li>Petal features are more discriminative than sepal features</li>
                     <li>The SVM model achieves high accuracy in multiclass classification</li>
                     <li>The species <em>setosa</em> is the easiest to classify, however, <em>versicolor</em> and <em>virginica</em> show some overlap</li>
@@ -225,6 +228,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
