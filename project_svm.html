@@ -110,7 +110,20 @@ As the test size is 0.2 (20%) and the number of samples is 150:
 	<li>These two formulas will be used: RBF Kernel (Radial Basis Function) and SVM Loss Function with L2 Regularization</li>
 	<img src="images/RBFKernel.png" style="max-width:100%; height:auto;">
 	<img src="images/RBFKernelLoss.png" style="max-width:100%; height:auto;">
-    <p>where (Φ({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
+    <p>In RBF Kernel
+	•	x_i, x_j: data vectors (training samples).
+	•	\|x_i - x_j\|^2: squared Euclidean distance between the two points.
+	•	\sigma: controls the width of the Gaussian.
+	•	k(x_i, x_j): similarity measure (1 = similar, 0 = far apart)
+In SVM Loss with L2 Regularization:
+	•	w: weight vector of the hyperplane.
+	•	b: bias term.
+	•	\|w\|^2: L2 regularization term (penalizes large weights).
+	•	C: trade-off parameter between margin size and correct classification.
+	•	n: number of samples.
+	•	y_i: label of sample i (1 or -1).
+	•	\phi(x_i): feature transformation of x_i (done by the RBF kernel).
+	•	\max(0, 1 - y_i(\dots)): hinge loss (penalty if a sample is misclassified or too close to the margin).</p>
 <h2>Best SVM model</h2>
 <pre><code>svm_grid = GridSearchCV(svm_pipeline, svm_param_grid, cv=5)
 svm_grid.fit(X_train, y_train)
