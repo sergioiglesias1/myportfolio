@@ -156,12 +156,12 @@ plt.tight_layout()
 plt.show()</code></pre>
 
 <h2>Accuracy results</h2>
-<pre><code>print(f"Cross-validation accuracy: {svm_grid.best_score_:.3f}")
-print(f"Test set accuracy: {accuracy_score(y_test, y_pred_svm):.3f}")
+<pre><code>print(f"Cross-validation accuracy: {svm_grid.best_score_:.5f}")
+print(f"Test set accuracy: {accuracy_score(y_test, y_pred_svm):.5f}")
 </code></pre>
 Regarding accuracy results we have:
-<li><strong>Cross-validation accuracy = </strong>0.975</li>
-<li><strong>Test set accuracy = </strong>0.967</li>
+<li><strong>Cross-validation accuracy = </strong>0.97500</li>
+<li><strong>Test set accuracy = </strong>0.96667</li>
 <h2>Metrics by class</h2>
 <pre><code>precision = precision_score(y_test, y_pred_svm, average=None)
 recall = recall_score(y_test, y_pred_svm, average=None)
@@ -183,21 +183,21 @@ results_df['Real_Especie'] = results_df['Real'].map({0: 'setosa', 1: 'versicolor
 results_df['Pred_Especie'] = results_df['Prediction'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
 
 print(f"NUMBER OF CORRECT PREDICTIONS: {results_df['Correct'].sum()}/{len(results_df)}")
-print(f"FINAL ACCURACY: {accuracy_score(y_test, y_pred_svm):.3f}")
+print(f"FINAL ACCURACY: {accuracy_score(y_test, y_pred_svm):.5f}")
 print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </code></pre>
-<strong>Output:</strong>
+<p>We finally have:</p>
 <ul class="results-list">
   <li><strong>Number of correct predictions:</strong> 29/30</li>
-  <li><strong>Final accuracy:</strong> 96.7% (0.967)</li>
+  <li><strong>Final accuracy:</strong> 96.667% (0.96667)</li>
   <li><strong>Best hyperparameters:</strong> 
     <ul>
       <li><strong>C:</strong> 1</li>
-      <li><strong>Gamma:</strong> 0.1</li>
+      <li><strong>γ:</strong> 0.1</li>
 	<img src="images/cap1.png" style="max-width:100%; height:auto;">
 	<img src="images/cap2.png" style="max-width:100%; height:auto;">
 	<img src="images/cap3.png" style="max-width:100%; height:auto;">
-	<img src="images/cap4.png" style="max-width:100%; height:auto;">
+	<img src="images/cap4(2).png" style="max-width:100%; height:auto;">
 	</ul>
   </li>
 </ul>
@@ -224,6 +224,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
