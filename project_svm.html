@@ -146,7 +146,7 @@ axes[1,0].set_xlabel('Specie')
 # Sepal width distribution located in axes[1,1]
 sns.histplot(data=df, x='sepal width (cm)', hue='species', 
              ax=axes[1,1], palette=['#E61313', '#0CCF60', '#170DDF'], 
-             alpha=0.6, element='step')
+             alpha=0.6, element='step', kde=True)
 axes[1,1].set_title('SEPAL WIDTH DISTRIBUTION BY SPECIES', fontweight='bold')
 axes[1,1].set_xlabel('Sepal Width (cm)')
 
@@ -223,6 +223,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
