@@ -108,10 +108,8 @@ As the test size is 0.2 (20%) and the number of samples is 150:
    <li>γ (Gamma - Kernel Coefficient):
       Defines the reach of each training example's influence in the RBF kernel.
       Tested values: [0.001, 0.01, 0.1, 1] with the purpose of scaling the kernel's influence proportionally</li>
-
+	<li>These two formulas will be used: RBF Kernel (Radial Basis Function) and SVM Loss Function with L2 Regularization</li>
 	<img src="images/RBFKernel.png" alt="Accuracy Results">
-	<li>RBF Kernel (Radial Basis Function):	
-    <li>SVM Loss Function (with L2 Regularization):
 	<img src="images/RBFKernelLoss.png" alt="Accuracy Results">
     <p>where (phi({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
 <h2>Best SVM model</h2>
@@ -173,7 +171,6 @@ f1 = f1_score(y_test, y_pred_svm, average=None)
 report = classification_report(y_test, y_pred_svm, target_names=target_names, digits=5)
 print(f"{report}")
 </code></pre>
-The classification report:
 <img src="images/Captura de pantalla 2025-08-29 114925.png" alt="Accuracy Results">
     <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
 	<h2>Final Output</h2>
@@ -211,8 +208,8 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
                     <li>The SVM model achieves high accuracy in multiclass classification</li>
                     <li>The species <em>setosa</em> is the easiest to classify, however, <em>versicolor</em> and <em>virginica</em> show some overlap</li>
                 </ul>
-<p>The SVM model is suitable for botanical classification systems and can be implemented in flower identification applications.</p>
-					<a href="https://github.com/sergioiglesias1" class="button">View Full Code on GitHub</a>
+    <p>This project demonstrates how machine learning can extract meaningful patterns, in this specific case, from botanical data. Could we apply this same approach to your classification challenge? Let's connect to discuss how SVM or other ML models could solve your business problems.</p>				
+		<a href="https://github.com/sergioiglesias1" class="button">View Full Code on GitHub</a>
 				</div>
 			</article>
 		</div>
@@ -228,6 +225,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
