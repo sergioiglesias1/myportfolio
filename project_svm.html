@@ -111,7 +111,6 @@ As the test size is 0.2 (20%) and the number of samples is 150:
 
     <li>RBF Kernel (Radial Basis Function):	
 	<img src="images/RBFKernel.png" alt="Accuracy Results">
-
     <li>SVM Loss Function (with L2 Regularization):
 	<img src="images/RBFKernelLoss.png" alt="Accuracy Results">
     <p>where (phi({x}_i)) is the nonlinear transformation applied via the RBF kernel.</p>
@@ -164,7 +163,6 @@ print(f"Cross-validation accuracy: {svm_grid.best_score_:.3f}")
 print(f"Test set accuracy: {accuracy_score(y_test, y_pred_svm):.3f}")
 </code></pre>
 Regarding accuracy results we have:
-<img src="images/Captura de pantalla 2025-08-29 114925.png" alt="Accuracy Results">
 <li><strong>Cross-validation accuracy = </strong>0.975</li>
 <li><strong>Test set accuracy = </strong>0.967</li>
 <h2>Metrics by class</h2>
@@ -176,18 +174,18 @@ report = classification_report(y_test, y_pred_svm, target_names=target_names, di
 print(f"{report}")
 </code></pre>
 <h3>The classification report:</h3>
-
+<img src="images/Captura de pantalla 2025-08-29 114925.png" alt="Accuracy Results">
     <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
 	<pre><code>results_df = pd.DataFrame({
     'Real': y_test,
-    'Predicción': y_pred_svm,
-    'Correcto': y_test == y_pred_svm
+    'Prediction': y_pred_svm,
+    'Correct': y_test == y_pred_svm
 })
 
 results_df['Real_Especie'] = results_df['Real'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
-results_df['Pred_Especie'] = results_df['Predicción'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
+results_df['Pred_Especie'] = results_df['Prediction'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
 
-print(f"NUMBER OF CORRECT PREDICTIONS: {results_df['Correcto'].sum()}/{len(results_df)}")
+print(f"NUMBER OF CORRECT PREDICTIONS: {results_df['Correct'].sum()}/{len(results_df)}")
 print(f"FINAL ACCURACY: {accuracy_score(y_test, y_pred_svm):.3f}")
 print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </code></pre>
@@ -199,7 +197,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
     <ul>
       <li><strong>C:</strong> 1</li>
       <li><strong>Gamma:</strong> 0.1</li>
-	<img src="output_ml_svm.png" alt="All Graphs">
+	<img src="images/output_ml_svm.png" alt="All Graphs">
     </ul>
   </li>
 </ul>
@@ -227,6 +225,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
