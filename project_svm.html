@@ -77,8 +77,8 @@ df['species'] = df['target'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
 print(f"Dataset Dimensions: {X.shape}")
 print(f"Available Characteristics: {feature_names}")
 </code></pre>
-Dataset Dimensions: (150, 4)
-Available Characteristics: ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
+<li>Dataset Dimensions: (150, 4)</li>
+<li>Available Characteristics: ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']</li>
 <h2>Train-Test</h2>
 <pre><code>X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
@@ -88,8 +88,8 @@ print(f"Training Variable: {X_train.shape[0]} samples")
 print(f"Testing Variable: {X_test.shape[0]} samples")
 </code></pre>
 As the test size is 0.2 (20%) and the number of samples is 150:
-Training Variable: 120 samples
-Testing Variable: 30 samples
+<li>Training Variable: 120 samples</li>
+<li>Testing Variable: 30 samples</li>
 <h2>Pipeline for SVM</h2>
 <pre><code>svm_pipeline = Pipeline([
     ('scaler', StandardScaler()),
@@ -101,19 +101,19 @@ Testing Variable: 30 samples
     'svm__C': [0.1, 1, 10, 100],
     'svm__gamma': [0.001, 0.01, 0.1, 1, 'scale']
 }</code></pre>
-<p>Hyperparameters:<br>
-    C (Regularization Strength):<br>
-      Controls the trade-off between maximizing the margin and minimizing classification errors.  <br>
-      Tested values: [0.1, 1, 10, 100]<br>
-    γ (Gamma - Kernel Coefficient):<br>
-      Defines the reach of each training example's influence in the RBF kernel.  <br>
-      Tested values: [0.001, 0.01, 0.1, 1] with the purpose of scaling the kernel's influence proportionally</p>
+<strong>Hyperparameters:</strong>
+    <li>C (Regularization Strength):
+      Controls the trade-off between maximizing the margin and minimizing classification errors.
+      Tested values: [0.1, 1, 10, 100]</li>
+   <li>γ (Gamma - Kernel Coefficient):
+      Defines the reach of each training example's influence in the RBF kernel.
+      Tested values: [0.001, 0.01, 0.1, 1] with the purpose of scaling the kernel's influence proportionally</li>
 
-    <h3>RBF Kernel (Radial Basis Function):</h3>
-    $$ K(\mathbf{x}_i, \mathbf{x}_j) = \exp\left(-\gamma \cdot \|\mathbf{x}_i - \mathbf{x}_j\|^2\right) $$
+    <li>RBF Kernel (Radial Basis Function):
+    $$ K(\mathbf{x}_i, \mathbf{x}_j) = \exp\left(-\gamma \cdot \|\mathbf{x}_i - \mathbf{x}_j\|^2\right) $$</li>
 
-    <h3>SVM Loss Function (with L2 Regularization):</h3>
-    $$ \min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i (\mathbf{w} \cdot \phi(\mathbf{x}_i) + b)) $$
+    <li></li>SVM Loss Function (with L2 Regularization):
+    $$ \min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i (\mathbf{w} \cdot \phi(\mathbf{x}_i) + b)) $$</li>
     <p>where \( \phi(\mathbf{x}_i) \) is the nonlinear transformation applied via the RBF kernel.</p>
 <h2>Best SVM model</h2>
 <pre><code>svm_grid = GridSearchCV(svm_pipeline, svm_param_grid, cv=5)
@@ -159,13 +159,13 @@ plt.tight_layout()
 plt.show()</code></pre>
 
 <h2>Accuracy results</h2>
-<pre><code>print("=" * 40)
+<pre><code>
 print(f"Cross-validation accuracy: {svm_grid.best_score_:.3f}")
 print(f"Test set accuracy: {accuracy_score(y_test, y_pred_svm):.3f}")
 </code></pre>
 Regarding accuracy results we have:
-<strong>Cross-validation accuracy:</strong> 0.975
-<strong>Test set accuracy:</strong> 0.967
+<li><strong>Cross-validation accuracy = </strong>0.975</li>
+<li><strong>Test set accuracy = </strong>0.967</li>
 <h2>Metrics by class</h2>
 <pre><code>precision = precision_score(y_test, y_pred_svm, average=None)
 recall = recall_score(y_test, y_pred_svm, average=None)
@@ -175,61 +175,14 @@ report = classification_report(y_test, y_pred_svm, target_names=target_names, di
 print(f"{report}")
 </code></pre>
 <h3>The classification report:</h3>
-    <table>
-        <thead>
-            <tr>
-                <th class="label"></th>
-                <th>precision</th>
-                <th>recall</th>
-                <th>f1-score</th>
-                <th>support</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="label">setosa</td>
-                <td>1.00000</td>
-                <td>1.00000</td>
-                <td>1.00000</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td class="label">versicolor</td>
-                <td>1.00000</td>
-                <td>0.90000</td>
-                <td>0.94737</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td class="label">virginica</td>
-                <td>0.90909</td>
-                <td>1.00000</td>
-                <td>0.95238</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td class="label">accuracy</td>
-                <td class="empty"></td>
-                <td class="empty"></td>
-                <td>0.96667</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td class="label">macro avg</td>
-                <td>0.96970</td>
-                <td>0.96667</td>
-                <td>0.96658</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td class="label">weighted avg</td>
-                <td>0.96970</td>
-                <td>0.96667</td>
-                <td>0.96658</td>
-                <td>30</td>
-            </tr>
-        </tbody>
-    </table>
+| Class      | Precision | Recall | F1-Score | Support |
+|------------|-----------|--------|----------|---------|
+| setosa     | 1.00000   | 1.00000| 1.00000  | 10      |
+| versicolor | 1.00000   | 0.90000| 0.94737  | 10      |
+| virginica  | 0.90909   | 1.00000| 0.95238  | 10      |
+| accuracy   |           | 		  | 0.96667  | 30      |
+| macro avg  | 0.96970   | 0.96667| 0.96658  | 30      |
+| weighted avg| 0.96970  | 0.96667| 0.96658  | 30      |
     <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
 	<pre><code>results_df = pd.DataFrame({
     'Real': y_test,
@@ -244,10 +197,17 @@ print(f"NUMBER OF CORRECT PREDICTIONS: {results_df['Correcto'].sum()}/{len(resul
 print(f"FINAL ACCURACY: {accuracy_score(y_test, y_pred_svm):.3f}")
 print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </code></pre>
-Output:
-NUMBER OF CORRECT PREDICTIONS: 29/30
-FINAL ACCURACY: 0.967
-BEST HYPERPARAMETERS: {'svm__C': 1, 'svm__gamma': 0.1}
+<strong>Output:</strong>
+<ul class="results-list">
+  <li><strong>Número de predicciones correctas:</strong> 29/30</li>
+  <li><strong>Precisión final:</strong> 96.7% (0.967)</li>
+  <li><strong>Mejores hiperparámetros:</strong> 
+    <ul>
+      <li><strong>C:</strong> 1</li>
+      <li><strong>Gamma:</strong> 0.1</li>
+    </ul>
+  </li>
+</ul>
 			<h2>Conclusions</h2>
                 <ul>
                     <li>The Iris dataset contains 3 balanced species (50 samples each)</li>
@@ -272,6 +232,7 @@ BEST HYPERPARAMETERS: {'svm__C': 1, 'svm__gamma': 0.1}
 </body>
 
 </html>
+
 
 
 
