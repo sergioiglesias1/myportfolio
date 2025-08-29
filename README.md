@@ -1,9 +1,8 @@
-```markdown
 # Welcome to my Portfolio
 
 This repository serves as an overview of my personal portfolio.  
 Here you will find a collection of projects that highlight my skills in software development, data analysis, and applied machine learning.  
-I work with libraries such as **scikit-learn**, **pandas**, and **NumPy** to build models, process data, and extract insights.  
+I work with libraries such as **scikit-learn**, **pandas**, and **matplotlib** to build models, process data, and extract insights.  
 The goal of these projects is to demonstrate not only technical knowledge, but also the ability to deliver clear, reproducible, and practical solutions.  
 
 ## Projects
@@ -47,9 +46,6 @@ Font Awesome (fontawesome.io).
 - Scrollex (github.com/ajlkn/jquery.scrollex)
 - Responsive Tools (github.com/ajlkn/responsive-tools)
 
-### Data Source
-World Development Indicators (WDI). More info: https://databank.worldbank.org
-
 ### Analysis
 Developed by Sergio Iglesias using Python libraries.
 
@@ -58,4 +54,3 @@ The original Massively code has been adapted to include my portfolio and project
 
 ### License Details
 For the full license details, visit html5up.net/license.
-```
