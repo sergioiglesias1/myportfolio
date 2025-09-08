@@ -55,6 +55,7 @@
 <pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from mpl_toolkits.mplot3d import Axes3D
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
@@ -136,7 +137,20 @@ y_pred_svm = best_svm.predict(X_test)
 y_pred_proba_svm = best_svm.predict_proba(X_test)</code></pre>
 This code tunes an SVM model via grid search with 5-fold CV, fits it to training data, gets the best estimator, and predicts labels and probabilities on test data.
 <h2>Create subplots and set the figure size</h2>
-<pre><code>fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+<pre><code>figura = plt.figure(figsize=(22, 16))
+colors = {'setosa':'red', 'versicolor':'green', 'virginica':'blue'}
+ax2 = figura.add_subplot(111, projection='3d')
+for specie, df in df.groupby('species'):
+	ax2.scatter(df['sepal width (cm)'], df['petal width (cm)'], df['petal length (cm)'], c=colors[specie], label=specie, s=40)
+ax2.set_xlabel("sepal width")
+ax2.set_ylabel("petal width")
+ax2.set_zlabel("petal length")
+ax2.set_title("Iris Scatter 3D", fontweight='bold')
+ax2.legend()
+plt.tight_layout()
+plt.show()	
+
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
 
 # Confusion matrix
 cm = confusion_matrix(y_test, y_pred_svm)
@@ -240,6 +254,7 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </body>
 
 </html>
+
 
 
 
