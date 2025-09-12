@@ -29,7 +29,7 @@
         #intro {
             text-align: center;
             padding: 80px 20px;
-            background: linear-gradient(135deg, #224abe 0%, #7a8fd9 100%);
+            background: linear-gradient(135deg, #093cd1 0%, #7a8fd9 100%);
             color: white;
             margin-bottom: 30px;
             height: 100vh;
@@ -112,9 +112,25 @@
             transition: all 0.3s ease;
         }
         
+        .icons a .fa-github {
+            color: #000000;
+        }
+
+        .icons a .fa-linkedin {
+            color: #4e73df;
+        }
+        
         .icons a:hover {
             color: #224abe;
             transform: scale(1.1);
+        }
+
+        .icons a:hover .fa-github {
+            color: #333;
+        }
+
+        .icons a:hover .fa-linkedin {
+            color: #224abe;
         }
         
         #main {
@@ -254,6 +270,14 @@
             transition: transform 0.3s ease;
             display: inline-block;
         }
+
+        .icons-alt a .fa-github {
+            color: #000000;
+        }
+
+        .icons-alt a .fa-linkedin {
+            color: #4e73df;
+        }
         
         .icons-alt a:hover {
             transform: scale(1.15);
@@ -324,7 +348,7 @@
             }
             
             .icons {
-                justify-content: center;
+                justify-content: flex-start;
                 width: 100%;
             }
             
@@ -474,6 +498,7 @@
     </script>
 </body>
 </html>
+
 
 
 
