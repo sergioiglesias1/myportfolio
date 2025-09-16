@@ -36,7 +36,18 @@
           </h1>
 				</header>
 				<div class="content">
-					<p>We'll be working with GDP per capita growth data from the <a href="https://databank.worldbank.org/reports.aspx?source=2&series=NY.GDP.PCAP.KD.ZG&country=#">World Development Indicators (WDI)</a> between 2004 and 2024. Each row in the dataset represents a different country and contains information on GDP growth rates over the specified periods. Here are some of the key variables in the dataset:</p>
+					<h2>What is β-Convergence and Why is it Important?</h2>
+    					<p>β-Convergence is an economic concept that examines whether poorer economies (or those with lower initial growth rates) tend to grow faster than richer ones, thus gradually "catching up" over time. In this project, β-convergence is analyzed by regressing the GDP per capita growth rate in a later period (e.g., 2019-2024) against the growth rate in an earlier period (e.g., 2004-2008). A negative regression coefficient (β < 0) indicates convergence, as countries with lower initial growth rates exhibit higher subsequent growth. Conversely, a positive β suggests divergence, where faster-growing countries continue to grow rapidly.</p>
+    					<p><strong>Why is it important?</strong> β-Convergence is a key concept in economic growth theory, which predicts that economies with lower initial income levels should grow faster due to diminishing returns to capital. Understanding convergence helps policymakers assess whether economic disparities between countries (e.g., emerging vs. developed economies) are narrowing over time. For instance:</p>
+    		<ul>
+        <li>For emerging economies, evidence of convergence could indicate successful development policies or access to global markets.</li>
+        <li>For developed economies, convergence may reflect economic stabilization or recovery after crises (e.g., the 2008 financial crisis or COVID-19).</li>
+        <li>Analyzing convergence across different time periods provides different perspectives into how global events, such as financial crises or pandemics, affect the growth.</li>
+    </ul>
+    <p>In this project, I investigate β-convergence by comparing emerging and developed countries over multiple periods (2004-2024). By calculating regression coefficients and R² values, I assess whether convergence occurs and how it differs between country groups. This analysis not only tests economic theory but also demonstrates the application of data science techniques to real-world macroeconomic data.</p>
+    
+    <h2>Dataset Description</h2>
+    <p>We'll be working with GDP per capita growth data from the <a href="https://databank.worldbank.org/reports.aspx?source=2&series=NY.GDP.PCAP.KD.ZG&country=#">World Development Indicators (WDI)</a> between 2004 and 2024. Each row in the dataset represents a different country and contains information on GDP growth rates over the specified periods. Here are some of the key variables in the dataset:</p>
 					<ul>
 						<li><strong>Country Code</strong> — The unique identifier for each country (e.g., USA, LUX, JPN, IRL, KOR).</li>
 						<li><strong>Group</strong> — Classification of countries into Emerging or Developed groups.</li>
@@ -50,23 +61,36 @@
 						</li>
 					</ul>
 
-					<h2>Data Preparation</h2>
+					<h2>Import libraries and data cleaning</h2>
                     <p>We set up the environment by importing necessary libraries, loading the WDI dataset, cleaning column names, removing empty rows, and calculating average growth rates for each period. The resulting dataset contains country codes and growth rates for the four periods.</p>
-					<pre><code>import pandas as pd
+					<pre><code># Import packages
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
 
-df_wdi = pd.read_csv("gdp_perc_growth_2004_2024.csv", sep=";", decimal=",")
-df_wdi.columns = [col.split(' [')[0] if ' [' in col else col for col in df_wdi.columns]
+# Define, clean and partitionate the data
+df_wdi = pd.read_csv(r"C:\Users\Usuario\Downloads\gdp_perc_growth_2004_2024.csv", sep=";", decimal=',')
 df_wdi = df_wdi.dropna()
-df_wdi['Pre_Crisis_Growth (2004-2008)'] = df_wdi.loc[:, '2004':'2008'].mean(axis=1)
-df_wdi['Recuperation_Growth (2009-2013)'] = df_wdi.loc[:, '2009':'2013'].mean(axis=1)
-df_wdi['Stability_Growth (2014-2018)'] = df_wdi.loc[:, '2014':'2018'].mean(axis=1)
-df_wdi['Recent_Growth (2019-2024)'] = df_wdi.loc[:, '2019':'2024'].mean(axis=1)
+df_wdi.columns = [col.split(' [')[0] if ' [' in col else col for col in df_wdi.columns]</code></pre>
+					<h2>Data partition</h2>
+					<p>We set the groups and times and group properly the countries, then we sample the output, which is rounded to two decimals to check:</p>
+					<pre><code># Data partitioning in groups
+df_wdi['Pre_Crisis_Growth (2004-2008)'] = df_wdi.loc[:, '2004':'2008'].mean(axis=1, skipna=True)
+df_wdi['Recuperation_Growth (2009-2013)'] = df_wdi.loc[:, '2009':'2013'].mean(axis=1, skipna=True)
+df_wdi['Stability_Growth (2014-2018)'] = df_wdi.loc[:, '2014':'2018'].mean(axis=1, skipna=True)
+df_wdi['Recent_Growth (2019-2024)'] = df_wdi.loc[:, '2019':'2024'].mean(axis=1, skipna=True)
 
-results = df_wdi[['Country Code', 'Pre_Crisis_Growth (2004-2008)', 'Recuperation_Growth (2009-2013)', 'Stability_Growth (2014-2018)', 'Recent_Growth (2019-2024)']]
+results = df_wdi[['Country Code', 'Pre_Crisis_Growth (2004-2008)', 'Recuperation_Growth (2009-2013)', 
+                  'Stability_Growth (2014-2018)', 'Recent_Growth (2019-2024)']]
+                  
+emerging = ['CHL', 'POL', 'ETH', 'VNM', 'IND', 'EGY', 'IDN', 'PER', 'MAR', 'PHL', 'NGA', 'BGD', 'PAK', 'MOZ']
+developed = ['USA', 'CHE', 'LUX', 'GBR', 'KOR', 'IRL', 'DEU', 'ESP', 'JPN', 'CAN', 'AUS', 'NOR', 'NLD', 'DNK', 'SWE', 'FIN']
+
+df_wdi['Group'] = df_wdi['Country Code'].apply(lambda x: 'Emerging' if x in emerging else 'Developed' if x in developed else 'Other')
+
 results.round(2)</code></pre>
-					<p>Sample output rounded to two decimals to check:</p>
 					<pre><code>Country Code  Pre_Crisis_Growth (2004-2008)  Recuperation_Growth (2009-2013)  Stability_Growth (2014-2018)  Recent_Growth (2019-2024)
 USA                   1.49                              0.40                            1.79                            0.98
 LUX                   2.48                             -0.85                            0.28                           -0.41
@@ -100,78 +124,60 @@ SWE		      2.20				0.21				1.37				0.91
 FIN		      2.99	                       -1.46				1.13	                       -0.16
 </code></pre>
 
-					<h2>Data Visualization and Linear Regression</h2>
-					<pre><code>
-# Group countries by emerging or developed
-emerging = ['CHL', 'POL', 'ETH', 'VNM', 'IND', 'EGY', 'IDN', 'PER', 'MAR', 'PHL', 'NGA', 'BGD', 'PAK', 'MOZ']
-developed = ['USA', 'CHE', 'LUX', 'GBR', 'KOR', 'IRL', 'DEU', 'ESP', 'JPN', 'CAN', 'AUS', 'NOR', 'NLD', 'DNK', 'SWE', 'FIN']
-df_wdi['Group'] = df_wdi['Country Code'].apply(
-    lambda x: 'Emerging' if x in emerging else 'Developed'
-    )
-						
-# First regression plot
-x_col = 'Pre_Crisis_Growth (2004-2008)'
-y_col = 'Recent_Growth (2019-2024)'
-
-for group in ['Emerging', 'Developed']:
-    subset = df_wdi[df_wdi['Group'] == group]
-    X = subset[[x_col]]
-    y = subset[y_col]
-    model = LinearRegression().fit(X, y)
-    plt.plot(X, model.predict(X), linestyle='-', label=f'{group} (β = {model.coef_[0]:.2f})')
-
-plt.title('β-Convergence: Pre-Crisis (2004-2008) vs. Recent (2019-2024)')
-plt.xlabel('Pre-Crisis Growth (%)')
-plt.ylabel('Recent Growth (%)')
-plt.legend()
-plt.grid(alpha=0.3)
-plt.show()</code></pre>
-					<img src="images/output_1.png" alt="Plot 1" class="image main" />
-                        <p>To start, we generate a plot with linear regression lines to explore β-convergence by comparing growth rates between the Pre-Crisis (2004–2008) and Recent (2019–2024) periods for Emerging and Developed economies. This first visualization helps to start revealing signs of divergence or convergence.</p>
-					<!-- Second plot -->
-					<pre><code># Second regression plot
-x_col = 'Recuperation_Growth (2009-2013)'
-y_col = 'Stability_Growth (2014-2018)'
-
-for group in ['Emerging', 'Developed']:
-    subset = df_wdi[df_wdi['Group'] == group]
-    X = subset[[x_col]]
-    y = subset[y_col]
-    model = LinearRegression().fit(X, y)
-    plt.plot(X, model.predict(X), linestyle='-', label=f'{group} (β = {model.coef_[0]:.2f})')
-
-plt.title('β-Convergence: Recuperation (2009-2013) vs. Stability (2014-2018)')
-plt.xlabel('Recuperation Growth (%)')
-plt.ylabel('Stability Growth (%)')
-plt.legend()
-plt.grid(alpha=0.3)
-plt.show()</code></pre>
-					<img src="images/output_2.png" alt="Plot 2" class="image main" />
-                        <p>Next, we examine β-convergence by plotting a linear regression of growth rates between the Recuperation (2009–2013) and Stability (2014–2018) periods.</p>
-					<!-- Third plot -->
-					<pre><code># Third regression plot
-x_col = 'Stability_Growth (2014-2018)'
-y_col = 'Recent_Growth (2019-2024)'
-
-for group in ['Emerging', 'Developed']:
-    subset = df_wdi[df_wdi['Group'] == group]
-    X = subset[[x_col]]
-    y = subset[y_col]
-    model = LinearRegression().fit(X, y)
-    plt.plot(X, model.predict(X), linestyle='-', label=f'{group} (β = {model.coef_[0]:.2f})')
-
-plt.title('β-Convergence: Stability (2014-2018) vs. Recent (2019-2024)')
-plt.xlabel('Stability Growth (%)')
-plt.ylabel('Recent Growth (%)')
-plt.legend()
-plt.grid(alpha=0.3)
-plt.show()</code></pre>
-					<img src="images/output_3.png" alt="Plot 3" class="image main" />
+					<h2>Function definition with linear regression, groups, R<sup>2</sup> and β-Coefficient</h2>
+					<pre><code># Function with group, beta-coeficient and r2
+def plot_beta_convergence(data, x_col, y_col, x_label, y_label, title, groups=['Emerging', 'Developed']):
+    plt.figure(figsize=(10, 6))
+    colors = {'Emerging': 'blue', 'Developed': 'orange'}
+    for group in groups:
+        subset = data[data['Group'] == group].dropna(subset=[x_col, y_col])
+        X = subset[[x_col]]
+        y = subset[y_col]
+        model = LinearRegression().fit(X, y)
+        r2 = r2_score(y, model.predict(X))
+        plt.scatter(X, y, label=f'{group} data', color=colors[group], alpha=0.5)
+        plt.plot(X, model.predict(X), linestyle='-', color=colors[group], 
+                 label=f'{group} (β = {model.coef_[0]:.2f}, R² = {r2:.2f})')
+    
+    plt.title(title, fontsize=14, pad=15)
+    plt.xlabel(x_label, fontsize=12)
+    plt.ylabel(y_label, fontsize=12)
+    plt.legend()
+    plt.grid(alpha=0.4)
+    plt.tight_layout()
+    plt.show()</code></pre>
+					<h2>Data visualization</h2>
+                        <p>To start, we apply the previously deifned function to explore β-convergence by comparing growth rates between the Pre-Crisis (2004–2008) and Recent (2019–2024) periods for Emerging and Developed economies. This first visualization helps to start revealing signs of divergence or convergence.</p>
+					<pre><code># First plot
+plot_beta_convergence(
+    df_wdi, 
+    'Pre_Crisis_Growth (2004-2008)', 'Recent_Growth (2019-2024)',
+    'Pre-Crisis Growth (%)', 'Recent Growth (%)',
+    'β-Convergence: Pre-Crisis (2004-2008) vs. Recent (2019-2024)'
+)</code></pre>
+					<img src="images/output_1_beta.png" alt="Plot 1" class="image main" />
+                        <p>Next, we apply the function to examine β-convergence by plotting a linear regression of growth rates between the Recuperation (2009–2013) and Stability (2014–2018) periods.</p>
+					<pre><code># Second plot
+plot_beta_convergence(
+    df_wdi, 
+    'Recuperation_Growth (2009-2013)', 'Stability_Growth (2014-2018)',
+    'Recuperation Growth (%)', 'Stability Growth (%)',
+    'β-Convergence: Post-Crisis (2009-2013) vs. Stability (2014-2018)'
+)</code></pre>
+					<img src="images/output_2_beta.png" alt="Plot 2" class="image main" />
 <p>Finally, we create another plot with regression lines to evaluate β-convergence from the Stability (2014–2018) to the Recent (2019–2024) period. This comparison is the most interesting one, due to the two β coefficients being positive, and also these are the most recent periods in this project.</p>
+					<pre><code># Third plot
+plot_beta_convergence(
+    df_wdi, 
+    'Stability_Growth (2014-2018)', 'Recent_Growth (2019-2024)',
+    'Stability Growth (%)', 'Recent Growth (%)',
+    'β-Convergence: Stability (2014-2018) vs. Recent (2019-2024)'
+)</code></pre>
+					<img src="images/output_3_beta.png" alt="Plot 3" class="image main" />
 					<h2>Conclusions</h2>
 					<ul>
-						<li><strong>Emerging economies:</strong> Fast growth but diverging (β = 0.47–0.69).</li>
-						<li><strong>Developed economies:</strong> Convergence slowing down, β turns positive recently.</li>
+						<li><strong>Emerging economies show clear and growing divergence:</strong>In the three analyzed periods, the Beta coefficient (β) for emerging countries is always positive (β = 0.47, 0.54, 0.69). This indicates there is no convergence; on the contrary, emerging economies that grew faster in one period tended to also grow faster in the next one.</li>
+						<li><strong>Developed economies have changed from a very weak convergence to a moderate divergence:</strong>In the first two graphs (analyzing pre-crisis and post-crisis periods), the β for developed countries (red line) is slightly negative (β = -0.24 and -0.13). This would point to slight convergence: those growing faster tended to slow down a bit.</li>
 					</ul>
 					<a href="https://github.com/sergioiglesias1" class="button">View Full Code on GitHub</a>
 				</div>
@@ -179,7 +185,6 @@ plt.show()</code></pre>
 		</div>
 	</div>
 
-	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.scrollex.min.js"></script>
 	<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -189,6 +194,9 @@ plt.show()</code></pre>
 	<script src="assets/js/main.js"></script>
 </body>
 </html>
+
+
+
 
 
 
