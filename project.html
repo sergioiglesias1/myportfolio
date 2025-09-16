@@ -37,14 +37,14 @@
 				</header>
 				<div class="content">
 					<h2>What is β-Convergence and Why is it Important?</h2>
-    					<p>β-Convergence is an economic concept that examines whether poorer economies (or those with lower initial growth rates) tend to grow faster than richer ones, thereby "catching up" over time. In this project, β-convergence is analyzed by regressing the GDP per capita growth rate in a later period (e.g., 2019-2024) against the growth rate in an earlier period (e.g., 2004-2008). A negative regression coefficient (β < 0) indicates convergence, as countries with lower initial growth rates exhibit higher subsequent growth. Conversely, a positive β suggests divergence, where faster-growing countries continue to grow rapidly.</p>
-    					<p><strong>Why is it important?</strong> β-Convergence is a key concept in economic growth theory, particularly in the context of the neoclassical growth model, which predicts that economies with lower initial income levels should grow faster due to diminishing returns to capital. Understanding convergence helps policymakers assess whether economic disparities between countries (e.g., emerging vs. developed economies) are narrowing over time. For instance:</p>
+    					<p>β-Convergence is an economic concept that examines whether poorer economies (or those with lower initial growth rates) tend to grow faster than richer ones, thus gradually "catching up" over time. In this project, β-convergence is analyzed by regressing the GDP per capita growth rate in a later period (e.g., 2019-2024) against the growth rate in an earlier period (e.g., 2004-2008). A negative regression coefficient (β < 0) indicates convergence, as countries with lower initial growth rates exhibit higher subsequent growth. Conversely, a positive β suggests divergence, where faster-growing countries continue to grow rapidly.</p>
+    					<p><strong>Why is it important?</strong> β-Convergence is a key concept in economic growth theory, which predicts that economies with lower initial income levels should grow faster due to diminishing returns to capital. Understanding convergence helps policymakers assess whether economic disparities between countries (e.g., emerging vs. developed economies) are narrowing over time. For instance:</p>
     		<ul>
         <li>For emerging economies, evidence of convergence could indicate successful development policies or access to global markets.</li>
         <li>For developed economies, convergence may reflect economic stabilization or recovery after crises (e.g., the 2008 financial crisis or COVID-19).</li>
-        <li>Analyzing convergence across different time periods (e.g., pre-crisis, post-crisis, and recent years) provides insights into how global events, such as financial crises or pandemics, affect growth dynamics.</li>
+        <li>Analyzing convergence across different time periods provides different perspectives into how global events, such as financial crises or pandemics, affect the growth.</li>
     </ul>
-    <p>In this project, I investigate β-convergence by comparing emerging and developed countries over multiple periods (2004-2024). By calculating regression coefficients and R² values, I assess whether convergence occurs and how it differs between country groups. This analysis not only tests economic theory but also demonstrates the application of data science techniques—such as data cleaning, regression modeling, and visualization—to real-world macroeconomic data.</p>
+    <p>In this project, I investigate β-convergence by comparing emerging and developed countries over multiple periods (2004-2024). By calculating regression coefficients and R² values, I assess whether convergence occurs and how it differs between country groups. This analysis not only tests economic theory but also demonstrates the application of data science techniques to real-world macroeconomic data.</p>
     
     <h2>Dataset Description</h2>
     <p>We'll be working with GDP per capita growth data from the <a href="https://databank.worldbank.org/reports.aspx?source=2&series=NY.GDP.PCAP.KD.ZG&country=#">World Development Indicators (WDI)</a> between 2004 and 2024. Each row in the dataset represents a different country and contains information on GDP growth rates over the specified periods. Here are some of the key variables in the dataset:</p>
@@ -176,8 +176,8 @@ plot_beta_convergence(
 					<img src="images/output_3_beta.png" alt="Plot 3" class="image main" />
 					<h2>Conclusions</h2>
 					<ul>
-						<li><strong>Emerging economies show clear and growing DIVERGENCE</strong>In the three analyzed periods, the Beta coefficient (β) for emerging countries is always positive (β = 0.47, 0.54, 0.69). This indicates there is no convergence; on the contrary, emerging economies that grew faster in one period tended to also grow faster in the next one.</li>
-						<li><strong>Developed economies have changed from a very weak convergence to a moderate divergence</strong>In the first two graphs (analyzing pre-crisis and post-crisis periods), the β for developed countries (red line) is slightly negative (β = -0.24 and -0.13). This would point to slight convergence: those growing faster tended to slow down a bit.</li>
+						<li><strong>Emerging economies show clear and growing divergence:</strong>In the three analyzed periods, the Beta coefficient (β) for emerging countries is always positive (β = 0.47, 0.54, 0.69). This indicates there is no convergence; on the contrary, emerging economies that grew faster in one period tended to also grow faster in the next one.</li>
+						<li><strong>Developed economies have changed from a very weak convergence to a moderate divergence:</strong>In the first two graphs (analyzing pre-crisis and post-crisis periods), the β for developed countries (red line) is slightly negative (β = -0.24 and -0.13). This would point to slight convergence: those growing faster tended to slow down a bit.</li>
 					</ul>
 					<a href="https://github.com/sergioiglesias1" class="button">View Full Code on GitHub</a>
 				</div>
@@ -194,6 +194,7 @@ plot_beta_convergence(
 	<script src="assets/js/main.js"></script>
 </body>
 </html>
+
 
 
 
