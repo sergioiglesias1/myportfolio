@@ -90,7 +90,7 @@ developed = ['USA', 'CHE', 'LUX', 'GBR', 'KOR', 'IRL', 'DEU', 'ESP', 'JPN', 'CAN
 
 df_wdi['Group'] = df_wdi['Country Code'].apply(lambda x: 'Emerging' if x in emerging else 'Developed' if x in developed else 'Other')
 
-results.round(2)</code></pre>
+results.round(2)</code></pre><p>We extract the results, partiotioned by periods:</p>
 					<pre><code>Country Code  Pre_Crisis_Growth (2004-2008)  Recuperation_Growth (2009-2013)  Stability_Growth (2014-2018)  Recent_Growth (2019-2024)
 USA                   1.49                              0.40                            1.79                            0.98
 LUX                   2.48                             -0.85                            0.28                           -0.41
@@ -179,7 +179,7 @@ plot_beta_convergence(
 						<li><strong>Emerging economies show clear and growing divergence:</strong>In the three analyzed periods, the Beta coefficient (β) for emerging countries is always positive (β = 0.47, 0.54, 0.69). This indicates there is no convergence; on the contrary, emerging economies that grew faster in one period tended to also grow faster in the next one.</li>
 						<li><strong>Developed economies have changed from a very weak convergence to a moderate divergence:</strong>In the first two graphs (analyzing pre-crisis and post-crisis periods), the β for developed countries (red line) is slightly negative (β = -0.24 and -0.13). This would point to slight convergence: those growing faster tended to slow down a bit.</li>
 					</ul>
-					<a href="https://github.com/sergioiglesias1" class="button">View Full Code on GitHub</a>
+					<a href="https://github.com/sergioiglesias1/Beta-Convergence-Analysis-of-Country-Growth" class="button">View Full Code on GitHub</a>
 				</div>
 			</article>
 		</div>
@@ -194,6 +194,7 @@ plot_beta_convergence(
 	<script src="assets/js/main.js"></script>
 </body>
 </html>
+
 
 
 
