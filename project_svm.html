@@ -196,6 +196,8 @@ print(f"{report}")
 </code></pre>
 <img src="images/Captura de pantalla 2025-08-29 114925.png" style="max-width:100%; height:auto;">
     <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
+    <p>Also, the accuracy results are so close to 1 because this database is a scikit-learn made database, which is very clean and well-structured.<strong>In reality, these metrics will be much lower, if real datasets have these metrics, it will be a bias, and it is surely overfitting.</strong></p>
+
 	<h2>Final Output</h2>
 	<pre><code>results_df = pd.DataFrame({
     'Real': y_test,
@@ -228,11 +230,12 @@ print(f"BEST HYPERPARAMETERS: {svm_grid.best_params_}")
 </ul>
 			<h2>Conclusions</h2>
                 <ul>
+                    <li>There is a single misplaced iris color, indicated off the diagonal of the confusion matrix.</li>
                     <li>Petal features are more discriminative than sepal features</li>
                     <li>The SVM model achieves high accuracy in multiclass classification</li>
                     <li>The species <em>setosa</em> is the easiest to classify, however, <em>versicolor</em> and <em>virginica</em> show some overlap</li>
                 </ul>
-    <p>This project demonstrates how machine learning can extract meaningful patterns, in this specific case, from botanical data. Could we apply this same approach to your classification challenge? Let's connect to discuss how SVM or other ML models could solve your business problems.</p>				
+    <p>This project demonstrates how machine learning can extract meaningful patterns, in this specific case, from a scikit-learn database. Could we apply this same approach to your classification challenge? Let's connect to discuss how SVM or other ML models could solve your business problems.</p>				
 		<a href="https://github.com/sergioiglesias1/ML-Clasification-of-Iris-SVM" class="button">View Full Code on GitHub</a>
 				</div>
 			</article>
