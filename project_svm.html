@@ -195,8 +195,7 @@ report = classification_report(y_test, y_pred_svm, target_names=target_names, di
 print(f"{report}")
 </code></pre>
 <img src="images/Captura de pantalla 2025-08-29 114925.png" style="max-width:100%; height:auto;">
-    <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories.</p>
-    <p>Also, the accuracy results are so close to 1 because this database is a scikit-learn made database, which is very clean and well-structured.</p>
+    <p>The empty cells in the "accuracy" row (under precision and recall) exist because accuracy is a single overall metric for the model, not broken down by those categories. Also, the accuracy results are so close to 1 because this database is a scikit-learn made database, which is very clean and well-structured.</p>
     <p><strong>In reality, these metrics will be much lower, if real datasets have these metrics, it will be a bias, and it is surely overfitting.</strong></p>
 
 	<h2>Final Output</h2>
